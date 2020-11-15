@@ -2,16 +2,21 @@
   export async function preload(page, session) {
     const { id } = page.params;
 
-    const res = await fetch(`productos/${id}.json`);
-    const producto = await res.json();
+    const res = await this.fetch(`productos/${id}.json`);
 
-    return { producto };
+    if (res.status == 200) {
+      const producto = await res.json();
+      return { producto };
+    }
+    if (res.status == 404) {
+      const { error } = await res.json();
+      this.error(404, error);
+    }
   }
 </script>
 
 <script>
   export let producto;
-  console.log(producto);
 </script>
 
 <div>

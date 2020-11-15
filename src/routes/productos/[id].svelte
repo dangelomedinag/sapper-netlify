@@ -20,7 +20,7 @@
 </script>
 
 <div>
-  <h2>título: {producto.titulo}</h2>
+  <h2 class="text-primary-600 bg-secondary">título: {producto.titulo}</h2>
   <p>precio: {producto.precio}</p>
   <p>{producto.desc}</p>
 </div>

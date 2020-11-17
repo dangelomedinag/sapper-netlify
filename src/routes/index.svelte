@@ -1,5 +1,6 @@
 <script>
   import Header from '../components/Header.svelte';
+  import Slidy from '../components/Slidy.svelte';
 </script>
 
 <style lang="scss">
@@ -20,7 +21,4 @@
   <!-- <a href="." slot="btn">xxxxx</a> -->
 </Header>
 
-<p>
-  <strong>Try editing this file (src/routes/index.svelte) to test live
-    reloading.</strong>
-</p>
+<Slidy />

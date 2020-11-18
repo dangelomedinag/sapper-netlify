@@ -70,9 +70,6 @@
   progress::-webkit-progress-bar {
     background-color: theme('colors.primary.100');
   }
-  pre {
-    max-width: 100%;
-  }
 </style>
 
 <div class="bg-white max-w-md my-8 mx-auto formulario">

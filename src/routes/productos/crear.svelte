@@ -1,14 +1,14 @@
 <script>
   import { goto } from '@sapper/app';
   let form = {
-    titulo: undefined,
+    nombre: undefined,
     precio: undefined,
-    desc: undefined,
+    descripcion: undefined,
   };
 
   const handleSubmit = async () => {
-    const { titulo, precio, desc } = form;
-    if (titulo && precio && desc) {
+    const { nombre, precio, descripcion } = form;
+    if (nombre && precio && descripcion) {
       const res = await fetch('productos.json', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -27,10 +27,10 @@
 <form on:submit|preventDefault={handleSubmit}>
   <input
     type="text"
-    placeholder="titulo del producto"
-    bind:value={form.titulo}
+    placeholder="nombre del producto"
+    bind:value={form.nombre}
     required />
   <input type="number" placeholder="precio" bind:value={form.precio} required />
-  <textarea placeholder="descripción" bind:value={form.desc} required />
+  <textarea placeholder="descripcionripción" bind:value={form.descripcion} required />
   <button type="submit">guardar</button>
 </form>

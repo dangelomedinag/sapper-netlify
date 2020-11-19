@@ -11,6 +11,7 @@
   import squareImage from '../../utils/urlopt';
 
   export let productos;
+  // console.log(productos);
 </script>
 
 <style lang="scss">

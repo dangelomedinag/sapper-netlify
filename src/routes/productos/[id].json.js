@@ -1,4 +1,5 @@
-import {productos} from './_data.js';
+// import {productos} from './_data.js';
+import {productos} from '../../store/productos';
 
 export function get(req,res,next) {
   const {id} = req.params;

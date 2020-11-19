@@ -57,7 +57,7 @@
   }
   .formulario {
     /* min-height: 100%; */
-    height: 800px;
+    /* height: 800px; */
   }
   progress {
     /* -webkit-appearance: none;
@@ -72,7 +72,7 @@
   }
 </style>
 
-<div class="bg-white max-w-md my-8 mx-auto formulario">
+<div class="bg-white my-8 mx-auto formulario">
   {#if !sendform}
     <div
       out:scale={{ scale: 0, duration: 300, easing: quintInOut }}

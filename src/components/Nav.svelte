@@ -62,18 +62,18 @@
       <a
         aria-current={segment === undefined ? 'page' : undefined}
         href="."
-        class="text-white m-0 p-0">inicio</a>
+        class="text-white hover:text-primary-700 m-0 p-0">inicio</a>
 
       <a
         rel="prefetch"
         aria-current={segment === 'productos' ? 'page' : undefined}
         href="productos"
-        class="text-white m-0 p-0">productos</a>
+        class="text-white hover:text-primary-700 m-0 p-0">productos</a>
 
       <a
         aria-current={segment === 'contacto' ? 'page' : undefined}
         href="contacto"
-        class="text-white m-0 p-0">contacto</a>
+        class="text-white hover:text-primary-700 m-0 p-0">contacto</a>
     </nav>
     <div
       class="hidden md:flex items-center justify-end space-x-8 md:flex-1 lg:w-0">

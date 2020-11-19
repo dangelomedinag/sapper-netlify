@@ -1,4 +1,4 @@
-import { productos } from './_data.js'
+import { productos } from '../../store/productos'
 import {v4 as uuidv4} from 'uuid';
 
 export function get(req, res, next){

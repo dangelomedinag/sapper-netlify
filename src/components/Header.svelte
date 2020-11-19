@@ -43,7 +43,7 @@
       </div>
       <div class="ml-3 inline-flex rounded-md shadow">
         <a
-          href="."
+          href="/productos"
           class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-primary-600 bg-white hover:text-primary-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
           Productos
         </a>

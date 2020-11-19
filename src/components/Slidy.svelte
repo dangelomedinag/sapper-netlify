@@ -1,14 +1,17 @@
 <script>
+  import { config } from '../store/slidyImages';
   import Slidy from 'svelte-slidy';
-  let name = 'Slidy';
 
+  const cards = config;
+
+  /* 
   const cards = [
     {
       id: 1,
-      header: 'What is Slidy?',
-      text: 'SLIDY – simple configurable carousel component on SvelteJS',
+      header: 'Cheescake de Maracuya',
+      text: 'Rico cheescake con exquisito sabor a maracuya',
       src:
-        'https://res.cloudinary.com/sapper-heroku-test/image/upload/w_500,h_500,c_fill/v1605582379/sapper/IMG_04_ghvyq5.jpg' /* https://res.cloudinary.com/demo/image/upload/w_300,h_200,c_crop/sample.jpg */,
+        'https://res.cloudinary.com/sapper-heroku-test/image/upload/w_500,h_500,c_fill/v1605582379/sapper/IMG_04_ghvyq5.jpg' ,
     },
     {
       id: 2,
@@ -66,7 +69,7 @@
       src:
         'https://res.cloudinary.com/sapper-heroku-test/image/upload/w_500,h_500,c_fill/v1605582382/sapper/IMG_07_krygar.jpg',
     },
-  ];
+  ]; */
 
   const slidy_cards = {
     slides: cards,
@@ -166,9 +169,14 @@
     box-shadow: 0 14px 25px rgba(0, 0, 0, 0.16);
   }
 
-  .slide article {
-    padding: 1em;
+  :global(.active .slide) {
+    /* border: 1px solid theme('colors.gray.300'); */
+    /* background-color: theme('colors.gray.300'); */
   }
+
+  /* .slide article {
+    padding: 1em;
+  } */
 
   /* .slide {
     position: relative;
@@ -216,9 +224,9 @@
     <Slidy {...slidy_cards} let:item>
       <div class="slide">
         <img alt={item.header} src={item.src} />
-        <article>
-          <h2>{item.header}</h2>
-          <p>{item.text}</p>
+        <article class="px-8">
+          <h2 class="text-primary-700">{item.header}</h2>
+          <p class="text-gray-500 truncate">{item.text}</p>
         </article>
       </div>
     </Slidy>

@@ -77,7 +77,7 @@
   </div>
 </div>
 
-<div class="flex flex-row w-full lightbox max-w-screen-md mx-auto">
+<div class="flex flex-row w-full lightbox  max-w-screen-md mx-auto">
   <div class="preview px-1">
     {#each producto.imgs as img, index}
       <div

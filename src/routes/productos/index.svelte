@@ -1,9 +1,11 @@
 <script context="module">
   export async function preload(page, session) {
-    const res = await this.fetch('/productos.json');
-    const productos = await res.json();
-
-    return { productos };
+    const res_productos = await this.fetch('api/productos.json');
+    const productos = await res_productos.json();
+    const res_categorias = await this.fetch('api/categorias.json');
+    const categorias = await res_categorias.json();
+    // console.log(productos);
+    return { productos, categorias };
   }
 </script>
 
@@ -11,14 +13,15 @@
   import squareImage from '../../utils/urlopt';
 
   export let productos;
+  export let categorias;
   // console.log(productos);
 </script>
 
 <style lang="scss">
-  ul {
-    margin: 0 0 1em 0;
-    line-height: 1.5;
-  }
+  // ul {
+  //   margin: 0 0 1em 0;
+  //   line-height: 1.5;
+  // }
 
   header {
     height: 150px;
@@ -41,22 +44,16 @@
   </h1>
   <nav class="text-primary-700 font-bold my-8" aria-label="Breadcrumb">
     <ol class="list-none p-0 inline-flex border border-primary-700 rounded-md">
-      <li class="flex items-center p-2 ">
-        <a href="#">todos</a>
-        <svg
-          class="fill-current w-3 h-3 mx-3"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 320 512"><path
-            d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" /></svg>
-      </li>
-      <li class="flex items-center">
-        <a href="#">Second Level</a>
-        <svg
-          class="fill-current w-3 h-3 mx-3"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 320 512"><path
-            d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" /></svg>
-      </li>
+      {#each categorias as categoria (categoria.id)}
+        <li class="flex items-center p-2 ">
+          <a href="/">{categoria.nombre}</a>
+          <svg
+            class="fill-current w-3 h-3 mx-3"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 320 512"><path
+              d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" /></svg>
+        </li>
+      {/each}
     </ol>
   </nav>
 </header>
@@ -64,7 +61,7 @@
 <main class="w-full">
   <div class="px-6 grid grid-cols-4 gap-4">
     {#each productos as item (item.id)}
-      <!-- <li><a rel="prefetch" href={`productos/${item.id}`}>{item.nombre}</a></li> -->
+      <!-- <a rel="prefetch" href={`productos/${item.id}?filter=${item.categoria_id}&categoria=testcategoria`}>{item.nombre}</a> -->
       <div
         class="col-span-4 sm:col-span-4 md:col-span-2 lg:col-span-1 xl:col-span-1 flex flex-col items-center">
         <div class="bg-white rounded-lg mt-5">
@@ -81,7 +78,8 @@
                 <a
                   rel="prefetch"
                   class="underline"
-                  href={`productos/${item.id}`}>ver más</a>
+                  href={`productos/${item.id}?filter=filtertest&categoria=testcategoria`}>ver
+                  más</a>
               </div>
               <div class="text-2xl text-primary-700 font-bold">
                 $

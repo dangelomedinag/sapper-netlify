@@ -1,5 +1,6 @@
 <script>
-  import { config } from '../store/slidyImages';
+  // import { config } from '../store/slidyImages';
+
   import Slidy from 'svelte-slidy';
 
   const cards = config;

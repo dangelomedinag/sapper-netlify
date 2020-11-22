@@ -12,6 +12,7 @@ const dev = NODE_ENV === 'development';
 app.use(json())
 app.use(urlencoded({extended: false}))
 app.use(cors())
+
 app // You can also use Express
 	.use(
 		compression({ threshold: 0 }),

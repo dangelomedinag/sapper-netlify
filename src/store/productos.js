@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
+
 const productos = [
   {
     id: uuidv4(),
@@ -79,16 +80,19 @@ const productos = [
 
 const categorias = [
   {
+    id: uuidv4(),
     nombre: 'cheescakes',
     titulo: 'Distintos sabores, uno especial para ti',
     descripcion: 'Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.'
   },
   {
+    id: uuidv4(),
     nombre: 'quesillos',
     titulo: 'Tradicional quesillo venezolano',
     descripcion: 'Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.'
   },
   {
+    id: uuidv4(),
     nombre: 'bebidas',
     titulo: 'Ponche crema venezolano',
     descripcion: 'Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in accusamus quisquam.'

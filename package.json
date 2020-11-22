@@ -2,6 +2,10 @@
   "name": "project-sapper-ssr",
   "description": "test page with sapper, svelte and SSR",
   "version": "0.0.1",
+  "engines": {
+    "node": "12.18.0",
+    "npm": "6.14.6"
+  },
   "scripts": {
     "dev": "concurrently \"sapper dev\" \"npm run watch:tailwind\"",
     "watch:tailwind": "postcss src/styles/tailwind.css -o static/index.css -w",

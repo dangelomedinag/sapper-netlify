@@ -20,7 +20,7 @@
   let curr_filter;
   let curr_sort;
 
-  $: if (filter === 'undefined') {
+  $: if (filter !== 'undefined') {
     filter = 'todos';
   }
 </script>

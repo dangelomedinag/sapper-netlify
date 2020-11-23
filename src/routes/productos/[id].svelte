@@ -21,6 +21,7 @@
   import { quintInOut } from 'svelte/easing';
   import { fade } from 'svelte/transition';
   export let producto;
+  let max_img_count = 5;
   let currImg = producto.imgs[0];
 </script>
 
@@ -35,14 +36,24 @@
   }
 
   .lightbox {
-    height: 500px;
+    max-width: 100vw;
+    min-height: 350px;
+
+    @media (min-width: 640px) {
+      max-width: 500px;
+      min-height: 400px;
+    }
+    @media (min-width: 768px) {
+      max-width: 700px;
+      min-height: 500px;
+    }
   }
   .preview {
     width: 100px;
   }
-  .currImg {
-    background-size: contain;
-  }
+  // .currImg {
+  //   background-size: 20px 20px;
+  // }
 </style>
 
 <svelte:head>
@@ -58,7 +69,8 @@
     <ol class="list-none p-0 inline-flex border border-primary-700 rounded-md">
       {#each ['productos', producto.tipo, producto.nombre] as breadcrum, index}
         <li class="flex items-center p-2">
-          <a href="/">{breadcrum}</a>
+          <a
+            href="/{index == 0 ? 'productos' : index == 1 ? `productos?filter=${breadcrum}` : ''}">{breadcrum}</a>
           {#if index !== 2}
             <svg
               class="fill-current w-3 h-3 ml-3"
@@ -71,29 +83,35 @@
     </ol>
   </nav>
 </header>
-<div class="container w-full mx-auto text-center">
+<div class="w-full mx-auto text-center">
   <div class="p-10 mx-auto text-2xl font-light">
     <p>{producto.descripcion}</p>
   </div>
+  <hr />
 </div>
+{#if producto.imgs.length !== 0}
+  <div
+    class="mt-4 flex flex-row lightbox mx-auto rounded-xl border-4 border-gray-200 overflow-hidden bg-gray-200">
+    <div class="preview">
+      {#each producto.imgs.slice(0, max_img_count) as img, index}
+        <div
+          on:click={() => (currImg = producto.imgs[index])}
+          class="text-white overflow-hidden font-bold hover:opacity-100 cursor-pointer {img == currImg ? 'border-r-4 border-primary-700' : 'opacity-25'} transition-all duration-300 ease-in-out"
+          style="height: calc(100% / {max_img_count}); background: url({img}) no-repeat center; background-size: cover;">
+          <span class="m-2 p-2 bg-primary-700 rounded-full">{index + 1}</span>
+        </div>
+      {/each}
+    </div>
 
-<div class="flex flex-row w-full lightbox  max-w-screen-md mx-auto">
-  <div class="preview px-1">
-    {#each producto.imgs as img, index}
-      <div
-        on:click={() => (currImg = producto.imgs[index])}
-        class="hover:opacity-50 cursor-pointer"
-        style="height: calc(100% / {producto.imgs.length}); background: url({img}) no-repeat center; background-size: cover" />
-    {/each}
+    <div class="w-full">
+      {#key currImg}
+        <div
+          class="h-full w-full currImg border-l-4 border-primary-700"
+          style="height: 100%;  background: url({currImg}) no-repeat center; background-size: cover;" />
+      {/key}
+    </div>
   </div>
-  <div class="w-full">
-    <div
-      transition:fade={{ duration: 600, easing: quintInOut }}
-      class="h-full w-full currImg"
-      style="background: url({currImg}) no-repeat center;" />
-  </div>
-</div>
-
+{/if}
 <!-- <div>
   <h2 class="text-primary-600 bg-secondary">título: {producto.nombre}</h2>
   <p>precio: {producto.precio}</p>

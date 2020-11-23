@@ -5,7 +5,8 @@
     const res_categorias = await this.fetch('api/categorias.json');
     const categorias = await res_categorias.json();
     // console.log(productos);
-    return { productos, categorias };
+    const filter = page.query.filter;
+    return { productos, categorias, filter };
   }
 </script>
 
@@ -14,7 +15,14 @@
 
   export let productos;
   export let categorias;
-  // console.log(productos);
+  export let filter;
+
+  let curr_filter;
+  let curr_sort;
+
+  $: if (filter === 'undefined') {
+    filter = 'todos';
+  }
 </script>
 
 <style lang="scss">
@@ -44,7 +52,7 @@
   </h1>
   <nav class="text-primary-700 font-bold my-8" aria-label="Breadcrumb">
     <ol class="list-none p-0 inline-flex border border-primary-700 rounded-md">
-      {#each categorias as categoria (categoria.id)}
+      <!-- {#each categorias as categoria (categoria.id)}
         <li class="flex items-center p-2 ">
           <a href="/">{categoria.nombre}</a>
           <svg
@@ -53,14 +61,48 @@
             viewBox="0 0 320 512"><path
               d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" /></svg>
         </li>
-      {/each}
+      {/each} -->
+      <li class="hover:cursor-pointer relative flex items-center p-1">
+        <select
+          bind:value={curr_filter}
+          class="bg-transparent p-2 border-none outline-none"
+          name="filtercategoria"
+          id="filter">
+          <option class="appearance-none p-2" value="todo">todos</option>
+          {#each categorias as categoria (categoria.id)}
+            <option class="appearance-none p-2" value={categoria.id}>
+              {categoria.nombre}
+            </option>
+          {/each}
+        </select>
+      </li>
+      <li class="hover:cursor-pointer relative flex items-center p-1">
+        <select
+          bind:value={curr_sort}
+          class="bg-transparent p-2 border-none outline-none"
+          name="filtercategoria"
+          id="filter">
+          <option class="appearance-none p-2" value="mayor">
+            mayor precio
+          </option>
+          <option class="appearance-none p-2" value="menor">
+            menor precio
+          </option>
+        </select>
+      </li>
     </ol>
   </nav>
 </header>
 
 <main class="w-full">
   <div class="px-6 grid grid-cols-4 gap-4">
-    {#each productos as item (item.id)}
+    {#each productos
+      .filter((item) =>
+        curr_filter === 'todo' ? item.nombre : item.categoria_id === curr_filter
+      )
+      .sort(function (a, b) {
+        return curr_sort === 'mayor' ? a.precio + b.precio : a.precio - b.precio;
+      }) as item (item.id)}
       <!-- <a rel="prefetch" href={`productos/${item.id}?filter=${item.categoria_id}&categoria=testcategoria`}>{item.nombre}</a> -->
       <div
         class="col-span-4 sm:col-span-4 md:col-span-2 lg:col-span-1 xl:col-span-1 flex flex-col items-center">
@@ -90,6 +132,8 @@
         </div>
       </div>
       <!-- end cols -->
+    {:else}
+      <p>cargando productos...</p>
     {/each}
   </div>
 </main>

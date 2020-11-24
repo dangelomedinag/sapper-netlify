@@ -12,6 +12,9 @@
 </script>
 
 <script>
+  import { scale } from 'svelte/transition';
+  import { flip } from 'svelte/animate';
+  import { quintInOut } from 'svelte/easing';
   import { onMount } from 'svelte';
   import axios from 'axios';
   let productos = [];
@@ -120,9 +123,10 @@
       .sort(function (a, b) {
         return curr_sort === 'mayor' ? a.precio + b.precio : a.precio - b.precio;
       }) as item (item.id)}
-      <!-- <a rel="prefetch" href={`productos/${item.id}?filter=${item.categoria_id}&categoria=testcategoria`}>{item.nombre}</a> -->
       <div
-        class="col-span-4 sm:col-span-4 md:col-span-2 lg:col-span-1 xl:col-span-1 flex flex-col items-center">
+        out:scale={{ duration: 350, scale: 0, easing: quintInOut }}
+        animate:flip={{ delay: 350, duration: 500, easing: quintInOut }}
+        class=" sm:col-span-4 md:col-span-2 lg:col-span-1 xl:col-span-1 flex flex-col items-center">
         <div class="bg-white rounded-lg mt-5">
           <img
             src={item.imgs.length > 0 ? squareImage(item.imgs[0], 'w_500,h_250,c_fill') : 'https://source.unsplash.com/MNtag_eXMKw/1600x900'}
@@ -148,9 +152,10 @@
           </div>
         </div>
       </div>
-      <!-- end cols -->
     {:else}
-      <p>cargando productos...</p>
+      <div class="col-span-4 flex justify-center items-center">
+        <p class="font-light text-3xl p-12">cargando productos...</p>
+      </div>
     {/each}
   </div>
 </main>
@@ -165,7 +170,7 @@
     class="w-full mt-5 p-3 border rounded-md border-primary-700"
     href="productos/crear">Crear producto</a>
 </div> -->
-
+<!-- 
 <div class="px-6 my-5 sm:my-8 sm:flex sm:justify-center lg:justify-start">
   <div class="rounded-md shadow">
     <a
@@ -174,4 +179,4 @@
       Crear producto
     </a>
   </div>
-</div>
+</div> -->

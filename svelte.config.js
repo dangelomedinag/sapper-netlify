@@ -1,7 +1,6 @@
 const sveltePreprocess = require('svelte-preprocess');
 
 const preprocessOptions = {
-    globalStyle:true,
     postcss: {
       configFilePath: './postcss.config.js'
     },

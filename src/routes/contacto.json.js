@@ -8,7 +8,7 @@ export function get(req, res, next){
 export function post(req, res, next){
   const currlength = commentarios.length
 
-  commentarios.push({...req.body, id: uuidv4()})
+  commentarios.push({...req.body, id: uuidv4(), fecha_creacion: new Date().toLocaleString()})
 
   if (currlength == commentarios.length) {
     res.status(301).end(JSON.stringify({message: "por alguna razon no se pudo actualizar la base de datos"}))

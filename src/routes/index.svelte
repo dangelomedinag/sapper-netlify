@@ -1,13 +1,27 @@
 <script>
-  import { config } from '../store/slidyImages';
-  import { mainStore } from '../store/store_main';
+  // import { config } from '../store/slidyImages';
+  // import Slidy from 'svelte-slidy';
+  // import xxx from '../store/slidyImages';
   import Header from '../components/Header.svelte';
-  // import Slidy from '../components/Slidy.svelte';
-  import Slidy from 'svelte-slidy';
+  import axios from 'axios';
+  import { onMount } from 'svelte';
+  let xxx = [];
 
-  const cards = config;
+  onMount(async () => {
+    // axios
+    //   .get('/api/productos.json')
+    //   .then((res) => {
+    //     xxx = res.data;
+    //   })
+    //   .catch((err) => console.log('error: ', err));
+    const { data } = await axios.get('api/productos.json');
+    xxx = data;
+    console.log(xxx);
+  });
 
-  /* 
+  // const cards = config;
+
+  /*  
   const cards = [
     {
       id: 1,
@@ -74,7 +88,7 @@
     },
   ]; */
 
-  const slidy_cards = {
+  /* const slidy_cards = {
     slides: cards,
     wrap: {
       id: 'slidy_default', // customize this instance Slidy by #id
@@ -109,7 +123,7 @@
       speed: 600,
       thickness: 1,
     },
-  };
+  }; */
 </script>
 
 <style>
@@ -236,7 +250,7 @@
     destacado
   </h1>
   <div class="w-full">
-    <Slidy {...slidy_cards} let:item>
+    <!-- <Slidy {...slidy_cards} let:item>
       <div class="slide">
         <img alt={item.header} src={item.src} />
         <article class="px-8">
@@ -244,15 +258,15 @@
           <p class="text-gray-500 truncate">{item.text}</p>
         </article>
       </div>
-    </Slidy>
+    </Slidy> -->
   </div>
 </div>
 
 <!-- < Slidy > -->
 <hr />
-{#each $mainStore as item}
+<!-- {#each $mainStore as item}
   <p>{item.nombre}</p>
-{/each}
+{/each} -->
 <p class="mt-3">
   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui omnis quo quam
   rem possimus accusamus fugit nobis id tempora, repellat ut odio praesentium

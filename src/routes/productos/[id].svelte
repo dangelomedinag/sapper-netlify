@@ -18,8 +18,6 @@
 </script>
 
 <script>
-  import { quintInOut } from 'svelte/easing';
-  import { fade } from 'svelte/transition';
   export let producto;
   let max_img_count = 5;
   let currImg = producto.imgs[0];
@@ -70,7 +68,7 @@
       {#each ['productos', producto.tipo, producto.nombre] as breadcrum, index}
         <li class="flex items-center p-2">
           <a
-            href="/{index == 0 ? 'productos' : index == 1 ? `productos?filter=${breadcrum}` : ''}">{breadcrum}</a>
+            href="/{index == 0 ? 'productos' : index == 1 ? `productos?filter=${producto.categoria_id}` : ''}">{breadcrum}</a>
           {#if index !== 2}
             <svg
               class="fill-current w-3 h-3 ml-3"

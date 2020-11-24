@@ -1,28 +1,43 @@
 <script context="module">
   export async function preload(page, session) {
-    const res_productos = await this.fetch('api/productos.json');
-    const productos = await res_productos.json();
-    const res_categorias = await this.fetch('api/categorias.json');
-    const categorias = await res_categorias.json();
-    // console.log(productos);
+    // const res_productos = await this.fetch('api/productos.json');
+    // const productos = await res_productos.json();
+    // const res_categorias = await this.fetch('api/categorias.json');
+    // const categorias = await res_categorias.json();
     const filter = page.query.filter;
-    return { productos, categorias, filter };
+    const { user } = session.user;
+    console.log(filter, user);
+    return { /* productos, categorias, */ filter };
   }
 </script>
 
 <script>
+  import { onMount } from 'svelte';
+  import axios from 'axios';
+  let productos = [];
+  let categorias = [];
+
+  onMount(async () => {
+    const getProductos = await axios.get('api/productos.json');
+    const getCategorias = await axios.get('api/categorias.json');
+    productos = getProductos.data;
+    categorias = getCategorias.data;
+  });
   import squareImage from '../../utils/urlopt';
 
-  export let productos;
-  export let categorias;
+  // export let productos;
+  // export let categorias;
   export let filter;
 
   let curr_filter;
   let curr_sort;
 
   $: if (filter !== 'undefined') {
-    filter = 'todos';
+    // filter = 'todos';
+    curr_filter = filter;
   }
+
+  // $: console.log(filter, curr_filter);
 </script>
 
 <style lang="scss">
@@ -68,7 +83,7 @@
           class="bg-transparent p-2 border-none outline-none"
           name="filtercategoria"
           id="filter">
-          <option class="appearance-none p-2" value="todo">todos</option>
+          <option class="appearance-none p-2" value="todos">todos</option>
           {#each categorias as categoria (categoria.id)}
             <option class="appearance-none p-2" value={categoria.id}>
               {categoria.nombre}
@@ -98,7 +113,9 @@
   <div class="px-6 grid grid-cols-4 gap-4">
     {#each productos
       .filter((item) =>
-        curr_filter === 'todo' ? item.nombre : item.categoria_id === curr_filter
+        curr_filter === 'todos'
+          ? item.nombre
+          : item.categoria_id === curr_filter
       )
       .sort(function (a, b) {
         return curr_sort === 'mayor' ? a.precio + b.precio : a.precio - b.precio;

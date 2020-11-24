@@ -1,6 +1,6 @@
 <script>
   import Nav from '../components/Nav.svelte';
-  // import TransitionWrapper from '../components/TransitionWrapper.svelte';
+  import TransitionWrapper from '../components/TransitionWrapper.svelte';
 
   export let segment;
 </script>

@@ -1,9 +1,6 @@
 <script context="module">
   export async function preload(page, session) {
     const { id } = page.params;
-    // const { filter, categoria } = page.query;
-    // console.log(page.query);
-
     const res = await this.fetch(`productos/${id}.json`);
 
     if (res.status == 200) {
@@ -18,9 +15,24 @@
 </script>
 
 <script>
+  import { onMount } from 'svelte';
+  import { slide } from 'svelte/transition';
+  import { quintInOut } from 'svelte/easing';
   export let producto;
   let max_img_count = 5;
-  let currImg = producto.imgs[0];
+  let playcount = 0;
+  $: currImg = producto.imgs[playcount];
+
+  onMount(() => {
+    const interval = setInterval(() => {
+      playcount = playcount + 1;
+      if (playcount >= producto.imgs.length) playcount = 0;
+    }, 3500);
+
+    return () => {
+      clearInterval(interval);
+    };
+  });
 </script>
 
 <style lang="scss">
@@ -35,14 +47,15 @@
 
   .lightbox {
     max-width: 100vw;
+    height: 350px;
     min-height: 350px;
 
     @media (min-width: 640px) {
-      max-width: 500px;
+      max-width: 100vw;
       min-height: 400px;
     }
     @media (min-width: 768px) {
-      max-width: 700px;
+      max-width: 100%;
       min-height: 500px;
     }
   }
@@ -65,10 +78,10 @@
   </h1>
   <nav class="text-primary-700 font-bold my-8" aria-label="Breadcrumb">
     <ol class="list-none p-0 inline-flex border border-primary-700 rounded-md">
-      {#each ['productos', producto.tipo, producto.nombre] as breadcrum, index}
+      {#each ['productos', producto.tipo] as breadcrum, index}
         <li class="flex items-center p-2">
           <a
-            href="/{index == 0 ? 'productos' : index == 1 ? `productos?filter=${producto.categoria_id}` : ''}">{breadcrum}</a>
+            href="/{index == 0 ? 'productos' : `productos?filter=${producto.categoria_id}`}">{breadcrum}</a>
           {#if index !== 2}
             <svg
               class="fill-current w-3 h-3 ml-3"
@@ -87,7 +100,7 @@
   </div>
   <hr />
 </div>
-{#if producto.imgs.length !== 0}
+<!-- {#if producto.imgs.length !== 0}
   <div
     class="mt-4 flex flex-row lightbox mx-auto rounded-xl border-4 border-gray-200 overflow-hidden bg-gray-200">
     <div class="preview">
@@ -109,9 +122,47 @@
       {/key}
     </div>
   </div>
-{/if}
+{/if} -->
 <!-- <div>
-  <h2 class="text-primary-600 bg-secondary">título: {producto.nombre}</h2>
-  <p>precio: {producto.precio}</p>
-  <p>{producto.descripcion}</p>
+  <ContactLista />
 </div> -->
+
+<div class="grid grid-cols-12 md:container mx-auto gap-0 mb-10">
+  <div class="col-span-full lg:col-span-5 bg-secondary">
+    <div
+      class=" text-white max-w-full h-full p-12 mx-auto flex flex-col justify-center items-center">
+      <h4 class="text-2xl font-light">precio</h4>
+      <h1 class="text-primary-700 font-bold text-6xl">
+        <span class="text-4xl font-light">$</span>{producto.precio}
+      </h1>
+      <hr />
+      precio por unidad - 210gr aprox.
+    </div>
+  </div>
+  <div class="col-span-full lg:col-span-7">
+    {#if producto.imgs.length !== 0}
+      <div
+        class="flex flex-row lightbox border-0 border-gray-200 overflow-hidden bg-gray-200">
+        <div class="w-full">
+          {#key currImg}
+            <div
+              transition:slide={{ easing: quintInOut }}
+              class="h-full w-full currImg border-l-4 border-primary-700"
+              style="height: 100%;  background: url({currImg}) no-repeat center; background-size: cover;" />
+          {/key}
+        </div>
+        <div class="preview">
+          {#each producto.imgs.slice(0, max_img_count) as img, index}
+            <div
+              on:click={() => (currImg = producto.imgs[index])}
+              class="text-white overflow-hidden font-bold hover:opacity-100 cursor-pointer {img == currImg ? 'border-r-4 border-primary-700' : 'opacity-25'} transition-all duration-300 ease-in-out"
+              style="height: calc(100% / {max_img_count}); background: url({img}) no-repeat center; background-size: cover;">
+              <span
+                class="m-2 p-2 bg-primary-700 rounded-full">{index + 1}</span>
+            </div>
+          {/each}
+        </div>
+      </div>
+    {/if}
+  </div>
+</div>

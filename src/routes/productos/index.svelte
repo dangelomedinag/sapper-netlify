@@ -1,7 +1,6 @@
 <script context="module">
   export async function preload(page, session) {
     const filter = page.query.filter;
-    console.log(filter);
     return { filter };
   }
 </script>
@@ -39,11 +38,6 @@
 </script>
 
 <style lang="scss">
-  // ul {
-  //   margin: 0 0 1em 0;
-  //   line-height: 1.5;
-  // }
-
   header {
     height: 150px;
     background-color: theme('colors.secondary');
@@ -65,25 +59,15 @@
   </h1>
   <nav class="text-primary-700 font-bold my-8" aria-label="Breadcrumb">
     <ol class="list-none p-0 inline-flex border border-primary-700 rounded-md">
-      <!-- {#each categorias as categoria (categoria.id)}
-        <li class="flex items-center p-2 ">
-          <a href="/">{categoria.nombre}</a>
-          <svg
-            class="fill-current w-3 h-3 mx-3"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 320 512"><path
-              d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" /></svg>
-        </li>
-      {/each} -->
       <li class="hover:cursor-pointer relative flex items-center p-1">
         <select
           bind:value={curr_filter}
-          class="bg-transparent p-2 border-none outline-none"
+          class="bg-transparent p-1 border-none outline-none font-bold cursor-pointer"
           name="filtercategoria"
           id="filter">
-          <option class="appearance-none p-2" value="todos">todos</option>
+          <option class="appearance-none" value="todos">todos</option>
           {#each categorias as categoria (categoria.id)}
-            <option class="appearance-none p-2" value={categoria.id}>
+            <option class="appearance-none" value={categoria.id}>
               {categoria.nombre}
             </option>
           {/each}
@@ -92,15 +76,11 @@
       <li class="hover:cursor-pointer relative flex items-center p-1">
         <select
           bind:value={curr_sort}
-          class="bg-transparent p-2 border-none outline-none"
+          class="bg-transparent border-none outline-none font-bold"
           name="filtercategoria"
           id="filter">
-          <option class="appearance-none p-2" value="mayor">
-            mayor precio
-          </option>
-          <option class="appearance-none p-2" value="menor">
-            menor precio
-          </option>
+          <option class="appearance-none" value="menor">menor precio</option>
+          <option class="appearance-none" value="mayor">mayor precio</option>
         </select>
       </li>
     </ol>
@@ -108,7 +88,7 @@
 </header>
 
 <main class="w-full">
-  <div class="px-6 grid grid-cols-4 gap-4">
+  <div class="px-6 grid grid-cols-4 gap-4 my-10">
     {#each productos
       .filter((item) =>
         curr_filter === 'todos'
@@ -116,7 +96,19 @@
           : item.categoria_id === curr_filter
       )
       .sort(function (a, b) {
-        return curr_sort === 'mayor' ? a.precio + b.precio : a.precio - b.precio;
+        if (curr_sort === 'mayor') {
+          if (a.precio < b.precio) {
+            return 1;
+          } else {
+            return -1;
+          }
+        } else {
+          if (a.precio > b.precio) {
+            return 1;
+          } else {
+            return -1;
+          }
+        }
       }) as item (item.id)}
       <div
         out:scale={{ duration: 350, scale: 0, easing: quintInOut }}
@@ -136,8 +128,7 @@
                 <a
                   rel="prefetch"
                   class="underline"
-                  href={`productos/${item.id}?filter=filtertest&categoria=testcategoria`}>ver
-                  más</a>
+                  href="productos/{item.id}">ver más</a>
               </div>
               <div class="text-2xl text-primary-700 font-bold">
                 $
@@ -154,24 +145,3 @@
     {/each}
   </div>
 </main>
-
-<!-- <ul>
-  {#each productos as item}
-    <li><a rel="prefetch" href={`productos/${item.id}`}>{item.nombre}</a></li>
-  {/each}
-</ul> -->
-<!-- <div class="w-full h-full">
-  <a
-    class="w-full mt-5 p-3 border rounded-md border-primary-700"
-    href="productos/crear">Crear producto</a>
-</div> -->
-<!-- 
-<div class="px-6 my-5 sm:my-8 sm:flex sm:justify-center lg:justify-start">
-  <div class="rounded-md shadow">
-    <a
-      href="productos/crear"
-      class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-700 hover:bg-primary-900 md:py-4 md:text-lg md:px-10">
-      Crear producto
-    </a>
-  </div>
-</div> -->

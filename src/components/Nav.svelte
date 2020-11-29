@@ -20,7 +20,7 @@
     z-index: 100;
     width: 100vw;
     height: 100vh;
-    transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: all 300ms cubic-bezier(0.5, 0.17, 0.26, 0.86);
   }
   .foreground.active {
     opacity: 0.8;

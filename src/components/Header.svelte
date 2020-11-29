@@ -1,12 +1,3 @@
-<script>
-  let cssrules = {
-    wrapper: 'wrapper py-12 bg-secondary w-full flex overflow-hidden',
-    content: 'wrapper-content mx-auto',
-    title:
-      'title text-3xl leading-9 font-extrabold tracking-tight text-neutral sm:text-4xl sm:leading-10',
-  };
-</script>
-
 <style lang="scss">
   .wrapper {
     background: linear-gradient(
@@ -19,9 +10,10 @@
   }
 </style>
 
-<div class={cssrules['wrapper']}>
-  <div class={cssrules['content']}>
-    <h2 class={cssrules['title']}>
+<div class="wrapper py-12 bg-secondary w-full flex overflow-hidden">
+  <div class="wrapper-content mx-auto">
+    <h2
+      class="title text-3xl leading-9 font-extrabold tracking-tight text-neutral sm:text-4xl sm:leading-10">
       Antojo de algo rico?
       <br />
       <span class="text-primary-600">

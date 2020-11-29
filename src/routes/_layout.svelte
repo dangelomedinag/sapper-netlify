@@ -9,7 +9,9 @@
 </style>
 
 <!-- <TransitionWrapper> -->
-<Nav {segment} />
+{#if segment !== 'api'}
+  <Nav {segment} />
+{/if}
 
 <slot />
 <!-- </TransitionWrapper> -->

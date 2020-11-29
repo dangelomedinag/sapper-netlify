@@ -1,13 +1,8 @@
 <script context="module">
   export async function preload(page, session) {
-    // const res_productos = await this.fetch('api/productos.json');
-    // const productos = await res_productos.json();
-    // const res_categorias = await this.fetch('api/categorias.json');
-    // const categorias = await res_categorias.json();
     const filter = page.query.filter;
-    const { user } = session.user;
-    console.log(filter, user);
-    return { /* productos, categorias, */ filter };
+    console.log(filter);
+    return { filter };
   }
 </script>
 
@@ -126,7 +121,7 @@
       <div
         out:scale={{ duration: 350, scale: 0, easing: quintInOut }}
         animate:flip={{ delay: 350, duration: 500, easing: quintInOut }}
-        class=" sm:col-span-4 md:col-span-2 lg:col-span-1 xl:col-span-1 flex flex-col items-center">
+        class="col-span-4 md:col-span-2 lg:col-span-2 xl:col-span-1 flex flex-col items-center">
         <div class="bg-white rounded-lg mt-5">
           <img
             src={item.imgs.length > 0 ? squareImage(item.imgs[0], 'w_500,h_250,c_fill') : 'https://source.unsplash.com/MNtag_eXMKw/1600x900'}

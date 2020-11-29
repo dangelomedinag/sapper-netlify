@@ -22,12 +22,7 @@ app // You can also use Express
 	.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),
-		sapper.middleware({
-			// customize the session
-			session: (req, res) => ({
-				user: {user: "abc", pass: 123}
-			})
-		})
+		sapper.middleware()
 	)
 	.listen(PORT, err => {
 		if (err) console.log('error', err);

@@ -161,7 +161,7 @@
               <a
                 on:click={menuVisible}
                 href="https://www.instagram.com/consweet.cl/"
-                class="whitespace-no-wrap inline-flex items-center justify-center border border-transparent rounded-md text-neutral border-primary-700 bg-transparent hover:bg-primary-500 focus:outline-none focus:border-primary-700">
+                class="whitespace-no-wrap inline-flex items-center justify-center border border-transparent rounded-md text-neutral border-primary-700 bg-primary-700 hover:bg-primary-500 focus:outline-none focus:border-primary-700">
                 Instagram
               </a>
             </span>

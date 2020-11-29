@@ -22,30 +22,31 @@
 <div class={cssrules['wrapper']}>
   <div class={cssrules['content']}>
     <h2 class={cssrules['title']}>
-      <slot />
+      Antojo de algo rico?
       <br />
       <span class="text-primary-600">
-        <slot name="sub" />
+        Estas en el lugar indicado
         <span
           class="block mt-2 md:inline-block text-4xl md:text-4xl lg:text-6xl">
-          <slot name="icons">😋🍰</slot>
+          😋🍰
         </span></span>
     </h2>
     <div class="mt-8 flex lg:flex-shrink-0 mr-auto">
       <div class="inline-flex rounded-md shadow">
         <slot name="btn">
           <a
-            href="."
+            rel="prefetch"
+            href="/productos"
             class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-primary-600 hover:bg-primary-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
-            Descúbrelo!
+            Productos
           </a>
         </slot>
       </div>
       <div class="ml-3 inline-flex rounded-md shadow">
         <a
-          href="/productos"
+          href="/contacto"
           class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-primary-600 bg-white hover:text-primary-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
-          Productos
+          Contacto
         </a>
       </div>
     </div>

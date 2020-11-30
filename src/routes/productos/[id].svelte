@@ -15,6 +15,7 @@
 </script>
 
 <script>
+  import ContactList from '../../components/ContactList.svelte';
   import { onMount } from 'svelte';
   import { slide } from 'svelte/transition';
   import { quintInOut } from 'svelte/easing';
@@ -62,9 +63,10 @@
   .preview {
     width: 100px;
   }
-  // .currImg {
-  //   background-size: 20px 20px;
-  // }
+  .bg-price {
+    background: url('/logo-iso.svg') no-repeat center 430%;
+    background-size: 90% 90%;
+  }
 </style>
 
 <svelte:head>
@@ -81,8 +83,9 @@
       {#each ['productos', producto.tipo] as breadcrum, index}
         <li class="flex items-center p-2">
           <a
+            class="hover:text-primary-900"
             href="/{index == 0 ? 'productos' : `productos?filter=${producto.categoria_id}`}">{breadcrum}</a>
-          {#if index !== 2}
+          {#if index !== 1}
             <svg
               class="fill-current w-3 h-3 ml-3"
               xmlns="http://www.w3.org/2000/svg"
@@ -95,10 +98,13 @@
   </nav>
 </header>
 <div class="w-full mx-auto text-center">
-  <div class="p-10 mx-auto text-2xl font-light">
+  <div class="container px-10 pb-10 mx-auto text-2xl font-light">
+    <div class="uppercase my-4 font-bold text-sm text-primary-700">
+      descripción
+    </div>
+    <hr />
     <p>{producto.descripcion}</p>
   </div>
-  <hr />
 </div>
 <!-- {#if producto.imgs.length !== 0}
   <div
@@ -127,10 +133,11 @@
   <ContactLista />
 </div> -->
 
-<div class="grid grid-cols-12 md:container mx-auto gap-0 mb-10">
+<div
+  class="grid grid-cols-12 rounded-xl overflow-hidden shadow-xl md:container mx-auto gap-0 mb-10">
   <div class="col-span-full lg:col-span-5 bg-secondary">
     <div
-      class=" text-white max-w-full h-full p-12 mx-auto flex flex-col justify-center items-center">
+      class="bg-price text-white max-w-full h-full p-12 mx-auto flex flex-col justify-center items-center">
       <h4 class="text-2xl font-light">precio</h4>
       <h1 class="text-primary-700 font-bold text-6xl">
         <span class="text-4xl font-light">$</span>{producto.precio}
@@ -166,3 +173,6 @@
     {/if}
   </div>
 </div>
+<section class="container mx-auto px-12 mb-10">
+  <ContactList />
+</section>

@@ -55,10 +55,6 @@
     background: grey;
     cursor: not-allowed;
   }
-  .formulario {
-    /* min-height: 100%; */
-    /* height: 800px; */
-  }
   progress {
     /* -webkit-appearance: none;
     appearance: none; */

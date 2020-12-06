@@ -1,39 +1,53 @@
 <script context="module">
-  export async function preload(page, session) {
+  export async function preload(page) {
     const { id } = page.params;
-    const res = await this.fetch(`productos/${id}.json`);
-
-    if (res.status == 200) {
-      const producto = await res.json();
-      return { producto };
-    }
-    if (res.status == 404) {
-      const { error } = await res.json();
-      this.error(404, error);
-    }
+    return { id };
   }
 </script>
 
 <script>
-  import ContactList from '../../components/ContactList.svelte';
+  export let id;
   import { onMount } from 'svelte';
+  import { prodStore } from '../../store/productos-store';
   import { slide } from 'svelte/transition';
   import { quintInOut } from 'svelte/easing';
-  export let producto;
+  import ContactList from '../../components/ContactList.svelte';
+
+  let producto = {
+    descuento: 0,
+    descripcion: '',
+    precio: 0,
+    nombre: '',
+    categoria_id: '',
+    imgs: [],
+    salient: null,
+    tipo: '',
+    id: '',
+  };
   let max_img_count = 5;
   let playcount = 0;
-  $: currImg = producto.imgs[playcount];
+  $: currImg = producto ? producto.imgs[playcount] : '';
 
-  onMount(() => {
+  onMount(async () => {
+    if ($prodStore.length == 0) {
+      await prodStore.get();
+    }
+
+    let findById = $prodStore.filter((items) => items.id === id);
+    producto = findById[0];
+
+    ImgsAnimated();
+  });
+
+  function ImgsAnimated() {
     const interval = setInterval(() => {
       playcount = playcount + 1;
       if (playcount >= producto.imgs.length) playcount = 0;
+      return () => {
+        clearInterval(interval);
+      };
     }, 3500);
-
-    return () => {
-      clearInterval(interval);
-    };
-  });
+  }
 </script>
 
 <style lang="scss">
@@ -106,33 +120,6 @@
     <p>{producto.descripcion}</p>
   </div>
 </div>
-<!-- {#if producto.imgs.length !== 0}
-  <div
-    class="mt-4 flex flex-row lightbox mx-auto rounded-xl border-4 border-gray-200 overflow-hidden bg-gray-200">
-    <div class="preview">
-      {#each producto.imgs.slice(0, max_img_count) as img, index}
-        <div
-          on:click={() => (currImg = producto.imgs[index])}
-          class="text-white overflow-hidden font-bold hover:opacity-100 cursor-pointer {img == currImg ? 'border-r-4 border-primary-700' : 'opacity-25'} transition-all duration-300 ease-in-out"
-          style="height: calc(100% / {max_img_count}); background: url({img}) no-repeat center; background-size: cover;">
-          <span class="m-2 p-2 bg-primary-700 rounded-full">{index + 1}</span>
-        </div>
-      {/each}
-    </div>
-
-    <div class="w-full">
-      {#key currImg}
-        <div
-          class="h-full w-full currImg border-l-4 border-primary-700"
-          style="height: 100%;  background: url({currImg}) no-repeat center; background-size: cover;" />
-      {/key}
-    </div>
-  </div>
-{/if} -->
-<!-- <div>
-  <ContactLista />
-</div> -->
-
 <div
   class="grid grid-cols-12 rounded-xl overflow-hidden shadow-xl md:container mx-auto gap-0 mb-10">
   <div class="col-span-full lg:col-span-5 bg-secondary">
@@ -173,6 +160,7 @@
     {/if}
   </div>
 </div>
+
 <section class="container mx-auto px-12 mb-10">
   <ContactList />
 </section>

@@ -2,21 +2,20 @@
   import Nav from '../components/Nav.svelte';
   import Footer from '../components/Footer.svelte';
   import TransitionWrapper from '../components/TransitionWrapper.svelte';
+  import ScrollTop from '../components/ScrollTop.svelte';
 
   export let segment;
 </script>
 
-<style>
-</style>
-
-<!-- <TransitionWrapper> -->
 {#if segment !== 'api'}
-  <Nav {segment} />
-{/if}
+  <ScrollTop />
+  <TransitionWrapper>
+    <Nav {segment} />
 
-<slot />
-<!-- </TransitionWrapper> -->
+    <slot />
 
-{#if segment !== 'api'}
-  <Footer />
+    <Footer />
+  </TransitionWrapper>
+{:else}
+  <slot />
 {/if}

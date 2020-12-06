@@ -1,9 +1,4 @@
 module.exports = {
-  future: {
-    // removeDeprecatedGapUtilities: true,
-    // purgeLayersByDefault: true,
-  },
-  purge: [],
   theme: {
     fontFamily: {
       display: ['Gilroy', 'sans-serif'],

@@ -5,8 +5,8 @@ export async function get(req, res, next){
 
   let producto = []
 
-  let citiesRef = db.collection('productos');
-  let query = citiesRef.where('id', '==', id).get()
+  let prodctsRef = db.collection('productos');
+  let query = prodctsRef.where('id', '==', id).get()
     .then(snapshot => {
       if (snapshot.empty) {
         console.log('No matching documents.');

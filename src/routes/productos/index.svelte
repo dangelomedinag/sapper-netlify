@@ -6,35 +6,32 @@
 </script>
 
 <script>
+  import { prodStore, categStore } from '../../store/productos-store';
   import { scale } from 'svelte/transition';
   import { flip } from 'svelte/animate';
   import { quintInOut } from 'svelte/easing';
   import { onMount } from 'svelte';
-  import axios from 'axios';
   let productos = [];
   let categorias = [];
 
   onMount(async () => {
-    const getProductos = await axios.get('api/productos.json');
-    const getCategorias = await axios.get('api/categorias.json');
-    productos = getProductos.data;
-    categorias = getCategorias.data;
+    if ($prodStore.length == 0) {
+      await prodStore.get();
+      await categStore.get();
+    }
+    productos = $prodStore;
+    categorias = $categStore;
   });
-  import squareImage from '../../utils/urlopt';
 
-  // export let productos;
-  // export let categorias;
+  import squareImage from '../../utils/urlopt';
   export let filter;
 
   let curr_filter;
   let curr_sort;
 
   $: if (filter !== 'undefined') {
-    // filter = 'todos';
     curr_filter = filter;
   }
-
-  // $: console.log(filter, curr_filter);
 </script>
 
 <style lang="scss">

@@ -1,7 +1,7 @@
 <script>
   import Info from './info.svelte';
   import { createEventDispatcher } from 'svelte';
-  export let current, categorias;
+  export let current, categorias, comentarios;
 
   const dispatch = createEventDispatcher();
 

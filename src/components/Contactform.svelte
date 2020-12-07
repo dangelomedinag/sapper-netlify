@@ -23,10 +23,10 @@
   // functions
   const sendDataform = async () => {
     sendform = !sendform;
-    const res = await fetch('contacto.json', {
+    const res = await fetch('/api/comentarios', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form, hora: new Date() }),
+      body: JSON.stringify(form),
     });
     const jsonres = await res.json();
 

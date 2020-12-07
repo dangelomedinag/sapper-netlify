@@ -2,7 +2,7 @@
   import { createEventDispatcher } from 'svelte';
   import Info from './info.svelte';
 
-  export let current, categorias;
+  export let current, categorias, comentarios;
   const dispatch = createEventDispatcher();
   let doc = current.id;
   let imgs = current.cloudinary ? current.cloudinary : [];

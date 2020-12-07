@@ -4,12 +4,14 @@
   import Create from './create.svelte';
   import Edit from './edit.svelte';
   import Delete from './delete.svelte';
+  import Comments from './comments.svelte';
 
   const options = [
     { mode: 'Leer', component: Read },
     { mode: 'Crear', component: Create },
     { mode: 'Editar', component: Edit },
     { mode: 'Eliminar', component: Delete },
+    { mode: 'Comentarios', component: Comments },
   ];
 
   let selected = options[0];
@@ -17,6 +19,7 @@
   let current;
   let productos = [];
   let categorias = [];
+  let comentarios = [];
   let form;
   let popover = false;
   let popoverMessage = '';
@@ -28,6 +31,8 @@
   onMount(async () => {
     const getProductos = await fetch('api/productos.json');
     const getCategorias = await fetch('api/categorias.json');
+    const getComentarios = await fetch('api/comentarios.json');
+    comentarios = await getComentarios.json();
     productos = await getProductos.json();
     categorias = await getCategorias.json();
     current = productos[0];
@@ -300,6 +305,7 @@
           this={selected.component}
           {current}
           {categorias}
+          {comentarios}
           on:popover={popoverHandler} />
       </main>
     {/key}

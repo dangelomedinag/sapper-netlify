@@ -1,5 +1,5 @@
 <script>
-  export let current, categorias;
+  export let current, categorias, comentarios;
   const categoria_parse = (categoria_id) => {
     const result = categorias.filter((item) => item.id === categoria_id);
     const name = result[0].nombre;

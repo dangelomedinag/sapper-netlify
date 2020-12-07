@@ -1,7 +1,7 @@
 <script>
   import Info from './info.svelte';
 
-  export let current, categorias;
+  export let current, categorias, comentarios;
 </script>
 
 <h1>Read</h1>

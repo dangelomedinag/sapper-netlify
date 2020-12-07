@@ -119,4 +119,20 @@ router.delete('/eliminar', async(req, res,next) => {
   
 })
 
+router.post('/comentarios', async(req, res, next) => {
+  let new_unique_id = uuidv4()
+  const comentario = {
+    ...req.body,
+    id: new_unique_id,
+    fecha_creacion: new Date().toLocaleString()
+  }
+  try {
+    let newProductRef = db.collection('comentarios').doc(new_unique_id);
+    let product = await newProductRef.set(comentario);
+    
+    res.status(200).end(JSON.stringify(product))   
+  } catch (error) {
+    res.status(301).end(JSON.stringify({message: "por alguna razon no se pudo actualizar la base de datos", error}))
+  }
+})
 export default router

@@ -1,5 +1,5 @@
 <script>
-  export let current, categorias;
+  export let current, categorias, comentarios;
   const none = [current];
   let formElement;
   let form = {

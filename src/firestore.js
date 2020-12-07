@@ -23,16 +23,16 @@ dotenv.config()
 // import serviceAccount from './store/svelte-app-test-firebase-adminsdk-9m7k6-86883cba37.json';
 
 const adminsdkconfig = {
-  "type": process.env.FIRESTORE_type ,
+  // "type": process.env.FIRESTORE_type ,
   "project_id": process.env.FIRESTORE_project_id ,
-  "private_key_id": process.env.FIRESTORE_private_key_id ,
-  "private_key": process.env.FIRESTORE_private_key ,
+  // "private_key_id": process.env.FIRESTORE_private_key_id ,
+  "private_key": process.env.FIRESTORE_private_key.replace(/\\n/g, '\n'),
   "client_email": process.env.FIRESTORE_client_email ,
-  "client_id": process.env.FIRESTORE_client_id ,
-  "auth_uri": process.env.FIRESTORE_auth_uri ,
-  "token_uri": process.env.FIRESTORE_token_uri ,
-  "auth_provider_x509_cert_url": process.env.FIRESTORE_auth_provider_x509_cert_url ,
-  "client_x509_cert_url": process.env.FIRESTORE_client_x509_cert_url 
+  // "client_id": process.env.FIRESTORE_client_id ,
+  // "auth_uri": process.env.FIRESTORE_auth_uri ,
+  // "token_uri": process.env.FIRESTORE_token_uri ,
+  // "auth_provider_x509_cert_url": process.env.FIRESTORE_auth_provider_x509_cert_url ,
+  // "client_x509_cert_url": process.env.FIRESTORE_client_x509_cert_url 
 }
 
 

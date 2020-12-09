@@ -117,7 +117,9 @@
       descripción
     </div>
     <hr />
-    <p>{producto.descripcion}</p>
+    <p>
+      {@html producto.descripcion}
+    </p>
   </div>
 </div>
 <div

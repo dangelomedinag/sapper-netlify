@@ -1,7 +1,7 @@
 <script>
-  import Info from './info.svelte';
   import { createEventDispatcher } from 'svelte';
-  export let current, categorias, comentarios;
+  export let data;
+  const { categorias, current } = data;
 
   const dispatch = createEventDispatcher();
 
@@ -16,24 +16,17 @@
   };
 
   const formAction = async (e) => {
-    console.log(form);
     const promise = await fetch('/api/editar', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     });
-    // const response = await promise.json();
-    console.log(promise);
     if (promise.ok) {
       // location.reload();
       dispatch('popover', { message: 'datos actualizados correctamente' });
     }
   };
 </script>
-
-<h1>Edit</h1>
-<Info {categorias} {current} />
-<hr />
 
 <hr />
 <div>

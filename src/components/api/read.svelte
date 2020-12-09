@@ -1,12 +1,8 @@
 <script>
-  import Info from './info.svelte';
-
-  export let current, categorias, comentarios;
+  export let data;
+  const { current } = data;
 </script>
 
-<h1>Read</h1>
-<Info {categorias} {current} />
-<hr />
 <p>{current.descripcion}</p>
 <p>{current.tipo}</p>
 <input type="number" value={current.precio} disabled />
@@ -16,7 +12,7 @@
   checked={current.salient}
   value={current.salient}
   disabled />
-<div class="flex flex-row">
+<div class="flex flex-row flex-wrap">
   {#each current.imgs as img (img)}
     <img src={img} class="w-32 h-auto" alt="" />
   {/each}

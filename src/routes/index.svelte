@@ -7,5 +7,3 @@
 </svelte:head>
 
 <Header />
-
-<hr />

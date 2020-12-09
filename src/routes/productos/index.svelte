@@ -6,6 +6,7 @@
 </script>
 
 <script>
+  import LoaderSpin from '../../components/LoaderSpin.svelte';
   import { prodStore, categStore } from '../../store/productos-store';
   import { scale } from 'svelte/transition';
   import { flip } from 'svelte/animate';
@@ -137,7 +138,8 @@
       </div>
     {:else}
       <div class="col-span-4 flex justify-center items-center">
-        <p class="font-light text-3xl p-12">cargando productos...</p>
+        <!-- <p class="font-light text-3xl p-12">cargando productos...</p> -->
+        <LoaderSpin />
       </div>
     {/each}
   </div>

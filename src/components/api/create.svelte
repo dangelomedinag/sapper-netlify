@@ -1,54 +1,48 @@
 <script>
-  export let current, categorias, comentarios;
-  const none = [current];
-  let formElement;
+  import { createEventDispatcher } from 'svelte';
+  export let data;
+  const { categorias } = data;
+  const dispatch = createEventDispatcher();
   let form = {
-    nombre: 'abc',
-    descripcion: '<span class="text-red-900">Lorem Ipsum Dol</span>',
-    precio: 1,
-    descuento: 2,
+    nombre: '',
+    descripcion: '',
+    precio: undefined,
+    descuento: undefined,
     salient: true,
     categoria: categorias[0].id,
-    new_categ: false,
-    name_new_categ: '',
     files: [],
   };
 
-  $: if (form.categoria === 'new') form.new_categ = true;
-  // $: console.log(form);
-
   const formAction = async (e) => {
-    console.log(form);
-    // const {
-    //   nombre,
-    //   descripcion,
-    //   precio,
-    //   descuento,
-    //   salient,
-    //   categoria,
-    //   new_categ,
-    //   name_new_categ,
-    //   files,
-    // } = form;
+    const formData = new FormData(e.target);
+
+    const promise = await fetch('/api/crear', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (promise.ok) {
+      // location.reload();
+      dispatch('popover', { message: 'Producto creado correctamente' });
+    }
   };
 </script>
 
-<!-- <span class="hidden">{current.nombre}</span>
-<span class="hidden">{categorias}</span> -->
-<h1>Create</h1>
-<hr />
 <form
-  bind:this={formElement}
+  on:submit|preventDefault={formAction}
   action="/api/crear"
   method="post"
   enctype="multipart/form-data">
   <section class="flex flex-col">
+    <label class="cursor-pointer" for="nombre">Nombre del Producto:</label>
     <input
       bind:value={form.nombre}
-      class="mb-3 border border-gray-400 rounded-md w-full outline-none p-3 focus:border-primary-700"
+      class=" border border-gray-400 rounded-md w-full outline-none p-3 focus:border-primary-700"
       type="text"
       name="nombre"
+      id="nombre"
       placeholder="nombre del producto" />
+    <label class="cursor-pointer" for="descripcion">Descripción:</label>
     <div class="flex flex-row">
       <textarea
         class="w-1/2 mb-3 border border-gray-400 rounded-md outline-none p-3 focus:border-primary-700"
@@ -58,12 +52,14 @@
         placeholder="HTML texto descripcion"
         bind:value={form.descripcion} />
       <div class="w-1/2">
-        <h1 class="text-center">Previsualizacion</h1>
+        <h1 class="text-center">Previsualización</h1>
         {@html form.descripcion}
       </div>
     </div>
     <div>
+      <label class="cursor-pointer" for="categoria">Categoría:</label>
       <select
+        id="categoria"
         bind:value={form.categoria}
         class="mb-3 border border-gray-400 rounded-md w-full outline-none p-3 focus:border-primary-700"
         name="categoria">
@@ -74,38 +70,36 @@
             {categoria.id}
           </option>
         {/each}
-        <option value={'new'}>nueva categoria</option>
       </select>
-      {#if form.new_categ}
-        <div>
-          <input
-            class="mb-3 border border-gray-400 rounded-md w-full outline-none p-3 focus:border-primary-700"
-            placeholder="Nombre de la nueva categoria"
-            type="text"
-            name="name_new_categ"
-            bind:value={form.name_new_categ} />
-          <button
-            on:click={() => {
-              form.new_categ = false;
-              form.categoria = categorias[0].id;
-              form.name_new_categ = '';
-            }}>x</button>
-        </div>
-      {/if}
+      <label class="cursor-pointer" for="precio">Precio:</label>
       <input
         name="precio"
+        id="precio"
         class="mb-3 border border-gray-400 rounded-md w-full outline-none p-3 focus:border-primary-700"
         type="number"
-        bind:value={form.precio} />
+        bind:value={form.precio}
+        placeholder="ej. 1800" />
+      <label class="cursor-pointer" for="descuento">Descuento:</label>
       <input
         name="descuento"
+        id="descuento"
         class="mb-3 border border-gray-400 rounded-md w-full outline-none p-3 focus:border-primary-700"
         type="number"
-        bind:value={form.descuento} />
+        bind:value={form.descuento}
+        placeholder="ej. 500" />
     </div>
-    <input name="salient" type="checkbox" bind:checked={form.salient} />
-    <label for="imgsProd">Upload a picture:</label>
+
+    <label for="salient" class="cursor-pointer">salient:
+      <input
+        class="cursor-pointer"
+        id="salient"
+        name="salient"
+        type="checkbox"
+        bind:checked={form.salient} />
+    </label>
+    <label class="cursor-pointer" for="imgsProd">cargar imagenes:</label>
     <input
+      class="p-3 border-2 border-dashed cursor-pointer hover:bg-neutral rounded-lg"
       multiple
       accept="image/png, image/jpeg"
       bind:files={form.files}

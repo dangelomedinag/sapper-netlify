@@ -1,44 +1,17 @@
 <script>
   import Dashboard from '../../components/api/dashboard.svelte';
+  import LoginApi from '../../components/api/LoginApi.svelte';
 
-  // export let segment;
-  // console.log(segment);
-  let user = 'admin';
-  let pass = '12345678';
-  let auth = false;
-  let clientuser = '';
-  let clientpass = '';
-  let message = false;
-  function authorization() {
-    if (clientuser === user && clientpass === pass) {
-      auth = !auth;
-    } else {
-      clientuser = '';
-      clientpass = '';
-      message = true;
-    }
+  let authenticationPass = false;
+
+  function Login(e) {
+    const { passport } = e.detail;
+    authenticationPass = passport;
   }
 </script>
 
-{#if auth}
+{#if authenticationPass}
   <Dashboard />
 {:else}
-  <div class="flex flex-col justify-center items-center w-screen h-screen">
-    <div>
-      <label for="user">User</label>
-      <input type="text" id="user" placeholder="User" bind:value={clientuser} />
-      <label for="pass">Password</label>
-      <input
-        type="text"
-        id="pass"
-        placeholder="*****"
-        bind:value={clientpass} />
-      <button on:click={authorization}>entrar</button>
-    </div>
-    {#if message}
-      <div class="border border-red-700 text-red-700 p-2 rounded-md">
-        error... usuario o contraseña invalida.
-      </div>
-    {/if}
-  </div>
+  <LoginApi on:authentication={Login} />
 {/if}

@@ -1,6 +1,8 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  export let current, categorias, comentarios;
+
+  export let data;
+  const { comentarios } = data;
 </script>
 
 <h1>Comentarios</h1>

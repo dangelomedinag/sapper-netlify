@@ -27,11 +27,33 @@ const upload = multer({
   },
 });
 
+router.post('/auth', async(req, res, next) =>{
+  const {user, pass} = req.body
+  
+  let queryDoc;
 
+  try {
+    const response = await db.collection('autenticacion').get();
+      response.forEach((doc) => {
+        const obj = doc.data()
+        queryDoc = obj;
+      });
+
+      if (user === queryDoc.user && pass === queryDoc.pass){
+        res.status(200).json({auth: true})
+      }else{
+        res.status(301).json({auth: false})
+      }
+
+  } catch (error) {
+    console.log(error)
+  }
+
+})
 
 router.post('/crear', upload.array("image", 6), async (req, res, next)=>{
 
-  const {nombre, descripcion, precio, descuento, salient, categoria, new_categ, name_new_categ} = req.body
+  const {nombre, descripcion, precio, descuento, salient, categoria} = req.body
 		
 		let new_unique_id = uuidv4()
 		let extracted = categoria.split(',')
@@ -70,8 +92,7 @@ router.post('/crear', upload.array("image", 6), async (req, res, next)=>{
 		create.imgs = arrImgs
 
 		let newProductRef = db.collection('productos').doc(new_unique_id);
-		let product = await newProductRef.set(create);
-		console.log(product)
+		await newProductRef.set(create);
 
 		res.status(200).json({
 			message: "Image cargadas correctamente",
@@ -94,7 +115,6 @@ router.put('/editar', async(req, res, next) => {
   let documentRef = db.doc(`productos/${id}`)
   
   documentRef.update(update).then(response => {
-    console.log(response, `Document updated at ${response._writeTime._seconds}`);
     res.status(200).json({id, updated_at: response._writeTime._seconds}).end()
   }).catch(err=>{
     console.log(err)
@@ -105,7 +125,7 @@ router.put('/editar', async(req, res, next) => {
 router.delete('/eliminar', async(req, res,next) => {
   const {id, imgs} = req.body;
   let report = []
-  const uploader = async (public_id) => await cloudinary.uploader.destroy(public_id, function(error, result) {console.log(result)})
+  const uploader = async (public_id) => await cloudinary.uploader.destroy(public_id)
 
   let documentRef = db.collection('productos').doc(id).delete()
 
@@ -135,4 +155,8 @@ router.post('/comentarios', async(req, res, next) => {
     res.status(301).end(JSON.stringify({message: "por alguna razon no se pudo actualizar la base de datos", error}))
   }
 })
+
+
+
+
 export default router

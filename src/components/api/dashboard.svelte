@@ -61,6 +61,7 @@
   const setCurrent = (id) => {
     const newCurrent = data.productos.filter((item) => item.id === id);
     data.current = newCurrent[0];
+    showMenu = false;
   };
 </script>
 
@@ -214,7 +215,7 @@
       </div>
     </div>
   </nav>
-  <div class="px-10 pt-10">
+  <div class="px-10 py-10">
     {#if data.current}
       {#key data.current}
         <div

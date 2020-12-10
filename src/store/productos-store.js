@@ -1,6 +1,4 @@
 import { writable } from 'svelte/store';
-import axios from 'axios';
-
 
 
 function getProductosStore() {
@@ -10,8 +8,8 @@ function getProductosStore() {
 		subscribe,
 		get: async() => {
       
-      const getProductos = await axios.get('api/productos.json');
-      let productos = getProductos.data;
+      const getProductos = await fetch('api/productos.json');
+      let productos = await getProductos.json();
       set(productos)
     }
 	};
@@ -24,8 +22,8 @@ function getCategoriasStore() {
 		subscribe,
 		get: async() => {
       
-      const getCategorias = await axios.get('api/categorias.json');
-      let categorias = getCategorias.data;
+      const getCategorias = await fetch('api/categorias.json');
+      let categorias = await getCategorias.json();
 
       set(categorias)
     }

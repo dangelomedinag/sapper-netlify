@@ -1,6 +1,16 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  import LoaderSpin from "../LoaderSpin.svelte";
+  import LoaderSpin from "../../components/LoaderSpin.svelte";
+  import { goto } from "@sapper/app";
+  import { onMount } from "svelte";
+  import { stores } from "@sapper/app";
+
+  const { session } = stores();
+
+  onMount(() => {
+    if ($session.user) {
+      goto("/api");
+    }
+  });
 
   let form = {
     user: undefined,
@@ -12,27 +22,6 @@
   let waiting = false;
   let showMessage = false;
   let summitReady = false;
-  const dispacth = createEventDispatcher();
-
-  async function formAction(e) {
-    waiting = true;
-    const promise = await fetch("/api/auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-
-    if (promise.ok) {
-      const { auth } = await promise.json();
-      if (auth) {
-        dispacth("authentication", { passport: auth });
-      }
-    } else {
-      const { auth } = await promise.json();
-      dispacth("authentication", { passport: auth });
-      showMessage = !showMessage;
-    }
-  }
 
   function checkEmpty(event) {
     const element = event.target;
@@ -49,12 +38,34 @@
       }
     }
   }
+
+  async function login() {
+    // console.log(form.user, form.pass);
+    try {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(form.user, form.pass)
+        .then((res) => {
+          // console.log("paso la prueba!");
+          const currentUser = firebase.auth().currentUser;
+          if (user != null) {
+            currentUser.getIdToken().then((data) => ($session.user = data));
+          }
+          // console.log($session.user);
+          goto("/api");
+        });
+    } catch (e) {
+      showMessage = !showMessage;
+      let message = e.message || e;
+      console.log("Something went wrong:", message);
+    }
+  }
 </script>
 
 <div class="container mx-auto py-24 px-6">
   <div class="max-w-sm mx-auto">
     {#if !waiting}
-      <form on:submit|preventDefault={formAction}>
+      <form on:submit|preventDefault={login}>
         <!-- user input -->
         <div class="flex flex-col w-full my-3">
           <label class="text-gray-400 my-1" for="user">Usuario</label>

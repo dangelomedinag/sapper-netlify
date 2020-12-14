@@ -1,6 +1,9 @@
 <script>
-  import { fly } from 'svelte/transition';
-  import { quintInOut } from 'svelte/easing';
+  import { fly } from "svelte/transition";
+  import { quintInOut } from "svelte/easing";
+  import { stores } from "@sapper/app";
+
+  const { session } = stores();
   export let segment;
   let showmenu = false;
 
@@ -12,7 +15,7 @@
 <style>
   .foreground {
     cursor: pointer;
-    background-color: theme('colors.secondary');
+    background-color: theme("colors.secondary");
     opacity: 0;
     position: absolute;
     top: 0;
@@ -36,7 +39,7 @@
   }
 
   [aria-current] {
-    color: theme('colors.primary.700');
+    color: theme("colors.primary.700");
   }
 
   a,
@@ -89,6 +92,15 @@
           Instagram
         </a>
       </span>
+      {#if $session.user}
+        <span class="m-0 p-0 inline-flex rounded-md shadow-sm">
+          <a
+            href="/api"
+            class="whitespace-no-wrap inline-flex items-center justify-center border border-transparent rounded-md text-neutral border-primary-700 bg-transparent hover:bg-primary-500 focus:outline-none focus:border-primary-700">
+            admin
+          </a>
+        </span>
+      {/if}
     </div>
     <div class="md:hidden">
       <button
@@ -165,6 +177,15 @@
                 Instagram
               </a>
             </span>
+            {#if $session.user}
+              <span class="m-0 p-0 inline-flex rounded-md shadow-sm">
+                <a
+                  href="/api"
+                  class="whitespace-no-wrap inline-flex items-center justify-center border border-transparent rounded-md text-neutral border-primary-700 bg-transparent hover:bg-primary-500 focus:outline-none focus:border-primary-700">
+                  admin
+                </a>
+              </span>
+            {/if}
           </div>
         </div>
       </div>

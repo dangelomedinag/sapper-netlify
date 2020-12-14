@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 
 function getProductosStore() {
-	const { subscribe, set, update } = writable([]);
+	const { subscribe, set, update } = writable(null);
 
 	return {
 		subscribe,
@@ -16,7 +16,7 @@ function getProductosStore() {
 }
 
 function getCategoriasStore() {
-	const { subscribe, set, update } = writable([]);
+	const { subscribe, set, update } = writable(null);
 
 	return {
 		subscribe,

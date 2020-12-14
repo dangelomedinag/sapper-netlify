@@ -6,17 +6,17 @@
 </script>
 
 <script>
-  import LoaderSpin from '../../components/LoaderSpin.svelte';
-  import { prodStore, categStore } from '../../store/productos-store';
-  import { scale } from 'svelte/transition';
-  import { flip } from 'svelte/animate';
-  import { quintInOut } from 'svelte/easing';
-  import { onMount } from 'svelte';
+  import LoaderSpin from "../../components/LoaderSpin.svelte";
+  import { prodStore, categStore } from "../../store/productos-store";
+  import { scale } from "svelte/transition";
+  import { flip } from "svelte/animate";
+  import { quintInOut } from "svelte/easing";
+  import { onMount } from "svelte";
   let productos = [];
   let categorias = [];
 
   onMount(async () => {
-    if ($prodStore.length == 0) {
+    if (!$prodStore) {
       await prodStore.get();
       await categStore.get();
     }
@@ -24,13 +24,13 @@
     categorias = $categStore;
   });
 
-  import squareImage from '../../utils/urlopt';
+  import squareImage from "../../utils/urlopt";
   export let filter;
 
   let curr_filter;
   let curr_sort;
 
-  $: if (filter !== 'undefined') {
+  $: if (filter !== "undefined") {
     curr_filter = filter;
   }
 </script>
@@ -38,7 +38,7 @@
 <style lang="scss">
   header {
     height: 150px;
-    background-color: theme('colors.secondary');
+    background-color: theme("colors.secondary");
 
     h1 {
       color: white;
